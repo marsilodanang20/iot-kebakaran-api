@@ -61,19 +61,16 @@ return [
             'options' => extension_loaded('pdo_mysql') ? array_filter([
                 PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
             ]) : [],
-         ],
-            'pgsql' => [
-                'driver' => 'pgsql',
-                'host' => env('PGHOST'),
-                'port' => env('PGPORT'),
-                'database' => env('PGDATABASE'),
-                'username' => env('PGUSER'),
-                'password' => env('PGPASSWORD'),
-                'charset' => 'utf8',
-                'prefix' => '',
-                'schema' => 'public',
-                'sslmode' => 'require',
-            ],
+        ],
+
+        'pgsql' => [
+            'driver' => 'pgsql',
+            'url' => env('DATABASE_URL'),
+            'charset' => 'utf8',
+            'prefix' => '',
+            'schema' => 'public',
+            'sslmode' => 'require',
+        ],
 
         'sqlsrv' => [
             'driver' => 'sqlsrv',
