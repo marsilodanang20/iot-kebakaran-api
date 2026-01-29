@@ -49,10 +49,14 @@ class SensorController extends Controller
         try {
             $log = SensorLog::create($request->all());
 
+            // Cleanup log lama jika melebihi batas (500 data)
+            $deletedCount = SensorLog::cleanupOldLogs();
+
             return response()->json([
                 'success' => true,
                 'message' => 'Data sensor berhasil disimpan',
-                'data'    => $log
+                'data'    => $log,
+                'cleanup' => $deletedCount > 0 ? "{$deletedCount} log lama dihapus" : null
             ], 201);
         } catch (\Exception $e) {
             return response()->json([
