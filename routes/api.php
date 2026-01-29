@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Route;
 
 // Public Health Check
 Route::get('/health', [SensorController::class, 'health']);
+Route::get('/sensor', [SensorController::class, 'index']);
 
 // Endpoints yang dilindungi API Key
 Route::middleware('api.key')->group(function () {

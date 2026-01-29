@@ -12,6 +12,19 @@ use Carbon\Carbon;
 class SensorController extends Controller
 {
     /**
+     * GET /api/sensor
+     * Informasi endpoint sensor
+     */
+    public function index()
+    {
+        return response()->json([
+            'success' => true,
+            'message' => 'Endpoint Sensor Ready. Gunakan method POST untuk mengirim data.',
+            'guide'   => 'Kirim data JSON dengan format yang sesuai ke endpoint ini menggunakan method POST.'
+        ]);
+    }
+
+    /**
      * POST /api/sensor
      * Menerima data dari ESP8266/ESP32
      */
