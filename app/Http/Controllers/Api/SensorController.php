@@ -86,9 +86,12 @@ class SensorController extends Controller
      * GET /api/sensor/logs
      * Riwayat data sensor (Paginated)
      */
-    public function logs()
+    public function logs(Request $request)
     {
-        $logs = SensorLog::orderBy('waktu', 'desc')->paginate(20);
+        $perPage = $request->get('per_page', 20);
+        
+        // Order by id desc (newest first) - more reliable than waktu from ESP8266
+        $logs = SensorLog::orderBy('id', 'desc')->paginate($perPage);
 
         return response()->json([
             'success' => true,
