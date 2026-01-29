@@ -33,10 +33,16 @@ class SensorController extends Controller
         $validator = Validator::make($request->all(), [
             'status' => 'required|string',
             'api'    => 'required|boolean',
-            'waktu'  => 'required|date_format:Y-m-d H:i:s',
+            'waktu'  => 'nullable|date_format:Y-m-d H:i:s', // Jadi nullable
             'suhu'   => 'nullable|integer',
             'lokasi' => 'nullable|string',
         ]);
+
+        // Default waktu ke skr jika tidak dikirim
+        $data = $request->all();
+        if (empty($data['waktu'])) {
+            $data['waktu'] = Carbon::now()->toDateTimeString();
+        }
 
         if ($validator->fails()) {
             return response()->json([
@@ -47,7 +53,7 @@ class SensorController extends Controller
         }
 
         try {
-            $log = SensorLog::create($request->all());
+            $log = SensorLog::create($data);
 
             // Cleanup log lama jika melebihi batas (500 data)
             $deletedCount = SensorLog::cleanupOldLogs();
